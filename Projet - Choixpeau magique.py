@@ -1,21 +1,26 @@
-with open("Characters.csv", mode='r', encoding='utf-8') as f:
-    character_list = f.readlines()
-    
-# Necessite un "nettoyage" pour retirer les \n en fin de chaîne
-# la méthode strip() supprime les \n en début et fin de chaîne de caractères
+import csv
 
-for i, chaine in enumerate(character_list):
-    character_list[i] = chaine.strip()       
-print(character_list)
+
+with open("Characters.csv", mode='r', encoding='utf-8') as f:
+    reader = csv.DictReader(f, delimiter=';')
+    characters_tab = [{key : value.replace('\xa0', ' ') for key, value in element.items()} for element in reader]
+
+print(characters_tab)
 
 
 with open("Caracteristiques_des_persos.csv", mode='r', encoding='utf-8') as f:
-    student_attributes = f.readlines()
-    
-# Necessite un "nettoyage" pour retirer les \n en fin de chaîne
-# la méthode strip() supprime les \n en début et fin de chaîne de caractères
+    reader = csv.DictReader(f, delimiter=';')
+    characteristics_tab = [{key : value for key, value in element.items()} for element in reader]
 
-for i, chaine in enumerate(student_attributes):
-    student_attributes[i] = chaine.strip()   
-    student_attributes[i] = chaine.pop()    
-print(student_attributes)
+print(characteristics_tab)
+
+poudlard_characters = []
+
+for poudlard_character in characteristics_tab:
+    for kaggle_character in characters_tab:
+        if poudlard_character['Name'] == kaggle_character['Name']:
+            poudlard_character.update(kaggle_character)
+            poudlard_characters.append(poudlard_character)
+
+print(poudlard_characters)
+
