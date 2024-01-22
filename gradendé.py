@@ -20,8 +20,6 @@ for poudlard_character in characteristics_tab:
             poudlard_character.update(kaggle_character)
             poudlard_characters.append(poudlard_character)
 
-
-# rajouter un "k" = 5 pour connaitre les 5 plus proche voinsins
 charactere_test = {"Courage": 9, "Ambition": 2, "Intelligence": 8, "Good": 9}
 for perso in poudlard_characters:
     distance = sqrt(((int(perso["Courage"]) - charactere_test["Courage"])**2) + (((int(perso["Ambition"]) - charactere_test["Ambition"])**2)) + (((int(perso["Intelligence"]) - charactere_test["Intelligence"])**2)) + (((int(perso["Good"]) - charactere_test["Good"])**2)))
@@ -34,4 +32,15 @@ for persos in poudlard_characters:
     if compteur < 5 :
         k_plus_proche_voisins.append(persos)
         compteur += 1
-print(k_plus_proche_voisins)
+#print(k_plus_proche_voisins)
+
+list_maison_proche = []
+for voisin in k_plus_proche_voisins:
+    list_maison_proche.append(voisin['House'])
+print(list_maison_proche) 
+for maison in list_maison_proche:
+    if maison == list_maison_proche(0):
+        maison_majoritaire = maison
+    else:
+        if maison == maison_majoritaire:
+            
