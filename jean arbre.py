@@ -85,3 +85,8 @@ for maison in list_maison_proche:
 liste_maison.sort(key=lambda x: x[1], reverse=True)
 print(liste_maison)
 
+if liste_maison[0][1] == liste_maison[1][1]:
+    perso_test["Maison"] = k_plus_proche_voisins[0]["House"]
+else:
+    perso_test["Maison"] = liste_maison[0][0]
+print (perso_test)
