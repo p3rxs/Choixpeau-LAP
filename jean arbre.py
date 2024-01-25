@@ -67,7 +67,21 @@ def k_proche_voisins(fusion_de_table):
     return k_plus_proche_voisins
 k_plus_proche_voisins = k_proche_voisins(poudlard_characters)
 
+liste_maison = [["Gryffindor", 0], ["Slytherin", 0], ["Ravenclaw", 0], ["Hufflepuff", 0]]
 list_maison_proche = []
 for voisin in k_plus_proche_voisins:
     list_maison_proche.append(voisin['House'])
-print(list_maison_proche)
+
+for maison in list_maison_proche:
+    if maison == "Gryffindor":
+        liste_maison[0][1] += 1
+    elif maison == ["Slytherin"]:
+        liste_maison[1][1] += 1
+    elif maison == "Ravenclaw":
+        liste_maison[2][1] += 1
+    else:
+        liste_maison[3][1] += 1
+
+liste_maison.sort(key=lambda x: x[1], reverse=True)
+print(liste_maison)
+
