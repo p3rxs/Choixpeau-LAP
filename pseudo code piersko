@@ -1,0 +1,89 @@
+import csv
+from math import *
+
+# Définition des caractéristiques des personnages
+perso1 = {"Courage": 9, "Ambition": 2, "Intelligence": 8, "Good": 9}
+perso2 = {"Courage": 6, "Ambition": 7, "Intelligence": 9, "Good": 7}
+perso3 = {"Courage": 3, "Ambition": 8, "Intelligence": 6, "Good": 3}
+perso4 = {"Courage": 2, "Ambition": 3, "Intelligence": 7, "Good": 8}
+perso5 = {"Courage": 3, "Ambition": 4, "Intelligence": 8, "Good": 8}
+
+# Fonction pour convertir un fichier CSV en tableau
+fonction csv_vers_tableau(chemin_du_fichier_csv):
+    ouvrir le fichier csv en mode lecture (utf-8) et l'assigner à une variable f
+    tab <- tableau vide
+    lire toutes les lignes du fichier et les assigner à une variable lines
+    extraire les clés (noms de colonnes) à partir de la première ligne et les assigner à une variable key_line
+    keys <- séparer key_line en utilisant le délimiteur ';'
+    pour chaque ligne dans lines (à partir de la deuxième ligne):
+        supprimer les espaces en début et fin de la ligne et assigner la ligne à une variable line
+        séparer la ligne en valeurs en utilisant le délimiteur ';' et les assigner à une variable values
+        dic <- dictionnaire vide
+        pour chaque indice i dans la plage de 0 à la longueur de keys excluant le dernier indice:
+            ajouter au dictionnaire dic une paire clé-valeur où la clé est keys[i] et la valeur est values[i] après avoir supprimé les espaces en début et fin
+        ajouter le dictionnaire dic au tableau tab
+    retourner tab
+
+# Fusion des deux tables
+fonction fusion_table(tabl1, tabl2):
+    poudlard_characters <- tableau vide
+    pour chaque poudlard_character dans tabl1:
+        pour chaque kaggle_character dans tabl2:
+            si le nom du poudlard_character est égal au nom du kaggle_character:
+                mettre à jour le poudlard_character avec les données du kaggle_character
+                ajouter le poudlard_character à poudlard_characters
+    retourner poudlard_characters
+
+# Calcul de la distance entre un personnage test et les autres personnages
+fonction mesure_de_distance(fusion_de_table, perso_test):
+    pour chaque perso dans fusion_de_table:
+        calculer la distance entre perso et perso_test selon la formule donnée
+        ajouter la distance au dictionnaire perso sous la clé "Distance"
+    trier fusion_de_table par la distance en ordre croissant
+    retourner fusion_de_table
+
+# Recherche des k plus proches voisins
+fonction k_proche_voisins(fusion_de_table):
+    k_plus_proche_voisins <- tableau vide
+    compteur <- 0
+    pour chaque persos dans fusion_de_table:
+        si compteur est inférieur à 5:
+            ajouter persos à k_plus_proche_voisins
+            incrémenter compteur
+    retourner k_plus_proche_voisins
+
+# Détermination de la maison dominante parmi les k plus proches voisins
+fonction tri_des_voisins(voisins):
+    liste_maison <- [["Gryffindor", 0], ["Slytherin", 0], ["Ravenclaw", 0], ["Hufflepuff", 0]]
+    list_maison_proche <- tableau vide
+    pour chaque voisin dans voisins:
+        ajouter la maison du voisin à list_maison_proche
+    pour chaque maison dans list_maison_proche:
+        si la maison est "Gryffindor":
+            incrémenter le compteur de Gryffindor dans liste_maison
+        sinon si la maison est "Slytherin":
+            incrémenter le compteur de Slytherin dans liste_maison
+        sinon si la maison est "Ravenclaw":
+            incrémenter le compteur de Ravenclaw dans liste_maison
+        sinon:
+            incrémenter le compteur de Hufflepuff dans liste_maison
+    trier liste_maison par ordre décroissant des compteurs
+    retourner liste_maison
+
+# Lecture des fichiers CSV et traitement des données
+poudlard_characters <- fusion_table(csv_vers_tableau("Caracteristiques_des_persos.csv"), csv_vers_tableau("Characters.csv"))
+poudlard_characters <- mesure_de_distance(poudlard_characters, perso1)
+k_plus_proche_voisins <- k_proche_voisins(poudlard_characters)
+liste_maison <- tri_des_voisins(k_plus_proche_voisins)
+
+# Détermination de la maison dominante pour le personnage test et affichage des résultats
+si le compteur de la première maison est égal au compteur de la deuxième maison:
+    assigner la maison du premier voisin à la maison du personnage test
+sinon:
+    assigner la première maison de la liste à la maison du personnage test
+
+afficher les caractéristiques du personnage test et sa maison dominante
+afficher les 5 plus proches voisins du personnage test
+poudlard_characters <- mesure_de_distance(poudlard_characters, perso1)
+k_plus_proche_voisins <- k_proche_voisins(poudlard_characters)
+liste_maison <- tri_des_voisins(k_plus_proche_voisins)
