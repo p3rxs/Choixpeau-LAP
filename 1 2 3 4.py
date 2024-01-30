@@ -68,6 +68,11 @@ def k_proche_voisins(fusion_de_table):
             compteur += 1
     return k_plus_proche_voisins
 def tri_des_voisins(voisins):
+    '''
+    rôle : cela va donner la maison dominante des 5 plus proche voisin 
+    entrée : les 5 plus proche voisins
+    sortie : liste des maisons des 5 plus proches voisins triée 
+    '''
     liste_maison = [["Gryffindor", 0], ["Slytherin", 0], ["Ravenclaw", 0], ["Hufflepuff", 0]]
     list_maison_proche = []
     for voisin in voisins:
