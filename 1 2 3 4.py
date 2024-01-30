@@ -27,7 +27,8 @@ def csv_to_table(csv_file):
             tab.append(dic)
     return tab
 poudlard_characters = []
-#fusion des 2 
+
+
 def fusion_table(tabl1, tabl2):
     '''
     rôle : fusionner les données brutes de deux fichiers CSV vers une liste
@@ -41,6 +42,8 @@ def fusion_table(tabl1, tabl2):
                 poudlard_characters.append(poudlard_character)
     return poudlard_characters
 poudlard_characters = fusion_table(csv_to_table("Caracteristiques_des_persos.csv"), csv_to_table("Characters.csv"))
+
+
 def mesure_de_distance(fusion_de_table, perso_test):
     '''
     rôle : mesurer les distances entre le profil cible et tous les autres profiles
@@ -67,12 +70,9 @@ def k_proche_voisins(fusion_de_table):
             k_plus_proche_voisins.append(persos)
             compteur += 1
     return k_plus_proche_voisins
+
+
 def tri_des_voisins(voisins):
-    '''
-    rôle : cela va donner la maison dominante des 5 plus proche voisin 
-    entrée : les 5 plus proche voisins
-    sortie : liste des maisons des 5 plus proches voisins triée 
-    '''
     liste_maison = [["Gryffindor", 0], ["Slytherin", 0], ["Ravenclaw", 0], ["Hufflepuff", 0]]
     list_maison_proche = []
     for voisin in voisins:
@@ -90,19 +90,44 @@ def tri_des_voisins(voisins):
 
     liste_maison.sort(key=lambda x: x[1], reverse=True)
     return liste_maison
-poudlard_characters = mesure_de_distance(poudlard_characters, perso1)
-k_plus_proche_voisins = k_proche_voisins(poudlard_characters)
-liste_maison = tri_des_voisins(k_plus_proche_voisins)
-if liste_maison[0][1] == liste_maison[1][1]:
-    perso1["Maison"] = k_plus_proche_voisins[0]["House"]
-else:
-    perso1["Maison"] = liste_maison[0][0]
 
+liste_maison = tri_des_voisins(poudlard_characters)
 
-print (f"Ce personnage a un courage de {perso1['Courage']}, une ambition de {perso1['Ambition']}, une intelligence de {perso1['Intelligence']}, une tendance à la bonté de {perso1['Good']},\nIl irait bien chez les {perso1['Maison']}")
-print(f'Ses 5 plus proche voisins sont: ')
-for voisin in k_plus_proche_voisins:
-    print(voisin['Name'], voisin['House'], voisin['Distance'])
+def teste_perso_voisins(liste_de_poudlard, perso):
+    liste_de_poudlard = mesure_de_distance(liste_de_poudlard, perso)
+    k_plus_proche_voisins = k_proche_voisins(liste_de_poudlard)
+    liste_maison = tri_des_voisins(k_plus_proche_voisins)
+    if liste_maison[0][1] == liste_maison[1][1]:
+        perso["Maison"] = k_plus_proche_voisins[0]["House"]
+    else:
+        perso["Maison"] = liste_maison[0][0]
+    return perso
+
+liste_maison = tri_des_voisins(poudlard_characters)
+
+def affichage_des_voisins(perso, liste_de_poudlard):
+    print(f"Ce personnage a un courage de {perso['Courage']}, une ambition de {perso['Ambition']}, une intelligence de {perso['Intelligence']}, une tendance à la bonté de {perso['Good']},\nIl irait bien chez les {perso['Maison']}")
+    print(f'Ses 5 plus proche voisins sont: ')
+    compteur = 0
+    for voisin in liste_de_poudlard:
+        print(voisin['Name'], voisin['House'], voisin['Distance'])
+        if compteur != 5:
+            compteur += 1
+        else :
+            liste_de_poudlard = mesure_de_distance(liste_de_poudlard, perso)
+            liste_de_poudlard = k_proche_voisins(liste_de_poudlard)
+            return "Voila, au prochains!"
+
+print(affichage_des_voisins(teste_perso_voisins(poudlard_characters, perso1), poudlard_characters))
+
+print(tri_des_voisins(k_proche_voisins(mesure_de_distance(fusion_table(csv_to_table("Caracteristiques_des_persos.csv"), csv_to_table("Characters.csv")), perso2))))
+
+"""
 poudlard_characters = mesure_de_distance(poudlard_characters, perso1)
-k_plus_proche_voisins = k_proche_voisins(poudlard_characters)
-liste_maison = tri_des_voisins(k_plus_proche_voisins)
+    k_plus_proche_voisins = k_proche_voisins(poudlard_characters)
+    liste_maison = tri_des_voisins(k_plus_proche_voisins)
+    if liste_maison[0][1] == liste_maison[1][1]:
+        perso1["Maison"] = k_plus_proche_voisins[0]["House"]
+    else:
+        perso1["Maison"] = liste_maison[0][0]
+        """
