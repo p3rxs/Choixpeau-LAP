@@ -1,6 +1,7 @@
 import csv
 from math import *
 personnages_a_tester = [{"Courage": 9, "Ambition": 2, "Intelligence": 8, "Good": 9}, {"Courage": 6, "Ambition": 7, "Intelligence": 9, "Good": 7}, {"Courage": 3, "Ambition": 8, "Intelligence": 6, "Good": 3}, {"Courage": 2, "Ambition": 3, "Intelligence": 7, "Good": 8}, {"Courage": 3, "Ambition": 4, "Intelligence": 8, "Good": 8}]
+
 def csv_to_table(csv_file):
     '''
     rôle : extraire les données brutes d'un fichier CSV vers une structure de données de type enregistrement
@@ -22,19 +23,22 @@ def csv_to_table(csv_file):
             tab.append(dic)
     return tab
 
+
 def fusion_table(tabl1, tabl2):
     '''
     rôle : fusionner les données brutes de deux fichiers CSV vers une liste
     entrée : chemin et nom des fichiers csv à traiter
     sortie : liste fusionnée
     '''
-    poudlard_characters = []
+    poudlard = []
     for poudlard_character in tabl1:
         for kaggle_character in tabl2:
             if poudlard_character['Name'] == kaggle_character['Name']:
                 poudlard_character.update(kaggle_character)
-                poudlard_characters.append(poudlard_character)
-    return poudlard_characters
+                poudlard.append(poudlard_character)
+    return poudlard
+
+poudlard_characters = fusion_table(csv_to_table("Caracteristiques_des_persos.csv"), csv_to_table("Characters.csv"))
 
 
 def mesure_de_distance(fusion_de_table, perso_test):
@@ -48,6 +52,7 @@ def mesure_de_distance(fusion_de_table, perso_test):
         perso["Distance"] = distance
     fusion_de_table.sort(key=lambda x : x["Distance"])
     return fusion_de_table
+
 
 def k_proche_voisins(fusion_de_table):
     '''
@@ -63,7 +68,6 @@ def k_proche_voisins(fusion_de_table):
             compteur += 1
     return k_plus_proche_voisins
 
-
 def tri_des_voisins(voisins):
     liste_maison = [["Gryffindor", 0], ["Slytherin", 0], ["Ravenclaw", 0], ["Hufflepuff", 0]]
     list_maison_proche = []
@@ -72,60 +76,37 @@ def tri_des_voisins(voisins):
     for maison in list_maison_proche:
         if maison == "Gryffindor":
             liste_maison[0][1] += 1
-        elif maison == ["Slytherin"]:
+        elif maison == "Slytherin":
             liste_maison[1][1] += 1
-        elif maison == "Ravenclaw":
+        elif maison ==  "Ravenclaw":
             liste_maison[2][1] += 1
-        else:
+        elif maison == "Hufflepuff":
             liste_maison[3][1] += 1
     liste_maison.sort(key=lambda x: x[1], reverse=True)
     return liste_maison
 
 
 def teste_perso_voisins(liste_de_poudlard, perso):
-    compteur_maison = 0
-    distance_maison_une = 0
-    distance_maison_deux = 0
-    maison_cas_pour_deux = []
     liste_de_poudlard = k_proche_voisins(mesure_de_distance(liste_de_poudlard, perso))
     liste_maison = tri_des_voisins(liste_de_poudlard)
-    for i in range(len(liste_maison)):
-        if liste_maison[i][1] == 2:
-            compteur_maison += 1
-            maison_cas_pour_deux.append(liste_maison[i][0])
-    if compteur_maison == 2:
-        for i in range(len(liste_maison)):
-            if liste_de_poudlard[i]['Maison'] == maison_cas_pour_deux[0]:
-                distance_maison_une += liste_de_poudlard[i]['Distance'] 
-            elif liste_de_poudlard[i]['Maison'] == maison_cas_pour_deux[1]:
-                distance_maison_une += liste_de_poudlard[i]['Distance'] 
-    if distance_maison_une < distance_maison_deux:
-        perso['Maison'] = maison_cas_pour_deux[0]
-        return perso
-    elif distance_maison_une > distance_maison_deux:
-        perso['Maison'] = maison_cas_pour_deux[1]
-        return perso 
-    else:
-        perso['Maison'] = liste_maison[1]
-        return perso
-    
-    
+    liste1 = []
+    liste2 = []
+    if liste_maison[0][1] == liste_maison[1][1]:
+        liste1.append()
+    perso["Maison"] = liste_maison[0][0]
+    return liste_de_poudlard, perso
 
 def affichage_des_voisins(perso, liste_de_poudlard):
     print(f"Ce personnage a un courage de {perso['Courage']}, une ambition de {perso['Ambition']}, une intelligence de {perso['Intelligence']}, une tendance à la bonté de {perso['Good']},\nIl irait bien chez les {perso['Maison']}")
     print(f'Ses 5 plus proche voisins sont: ')
     compteur = 0
-    for voisin in liste_de_poudlard:
+    for voisin in liste_de_poudlard[:5]:
         print(voisin['Name'], voisin['House'], voisin['Distance'])
-        if compteur < 4:
-            compteur += 1
-        else :
-            liste_de_poudlard = mesure_de_distance(liste_de_poudlard, perso)
-            liste_de_poudlard = k_proche_voisins(liste_de_poudlard)
-            return "Voila, au prochains! \n"
 
 
-poudlard_characters = fusion_table(csv_to_table("Caracteristiques_des_persos.csv"), csv_to_table("Characters.csv"))
+
 for perso in personnages_a_tester:
-    print(affichage_des_voisins(teste_perso_voisins(poudlard_characters,perso), poudlard_characters))
+    table, perso_avec_maison = teste_perso_voisins(poudlard_characters,perso)
+    print(affichage_des_voisins(perso_avec_maison, table))
     
+
