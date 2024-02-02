@@ -1,0 +1,64 @@
+k = 5
+perso_poudlard = liste des personnages déja placé, les voisins. Plus tard, leur nombre 
+sera diminué à 5
+perso_test = dictionnaire du personnage cible
+voisins = perso_poudlard
+
+début de la fonction mesure_de_distance(perso_poudlard, perso_test))
+	Pour chaque perso dans perso_poudlard:
+    		distance = racine_carrée((perso["Courage"] - perso_test["Courage"])^2 + (perso["Ambition"] - perso_test["Ambition"])^2 + (perso["Intelligence"] - perso_test["Intelligence"])^2 + (perso["Good"] - perso_test["Good"])^2)
+    		perso["Distance"] = distance
+	Trier perso_poudlard selon la clé "Distance" en ordre croissant
+	renvoyer perso_poudlard
+
+début de la fonction k_proche_voisins(perso_poudlard):
+Initialisation k_plus_proche_voisins à une liste vide
+Initialisation compteur à 0
+
+Pour chaque persos dans perso_poudlard:
+    Si compteur < k :
+        Ajouter persos à k_plus_proche_voisins
+        Incrementer compteur de 1
+
+renvoyer k_plus_proche_voisins
+
+début de la fonction maison_des_voisins(voisins):
+
+    Initialisation liste_maison à [[ "Gryffindor", 0], ["Slytherin", 0], ["Ravenclaw", 0], ["Hufflepuff", 0]]
+    Initialisation list_maison_proche à une liste vide
+
+    Pour chaque voisin dans voisins:
+        Ajouter voisin['House'] à list_maison_proche
+
+    Pour chaque maison dans list_maison_proche:
+        Si maison est égal à "Gryffindor":
+            Incrementer liste_maison[0][1] de 1
+        Sinon, si maison est égal à "Slytherin":
+            Incrementer liste_maison[1][1] de 1
+        Sinon, si maison est égal à "Ravenclaw":
+            Incrementer liste_maison[2][1] de 1
+        Sinon, si maison est égal à "Hufflepuff":
+            Incrementer liste_maison[3][1] de 1
+
+    Trier liste_maison selon la deuxième valeur de chaque sous-liste en ordre décroissant
+
+    Retourner liste_maison
+
+début de la fonction teste_perso_voisins(liste_de_poudlard, perso):
+    liste_de_poudlard = k_proche_voisins(mesure_de_distance(liste_de_poudlard, perso))
+    liste_maison = maison_des_voisins(liste_de_poudlard)
+
+    Si liste_maison[0][1] est égal à liste_maison[1][1]:
+        Si liste_de_poudlard[0]["House"] est égal à liste_maison[0][1] ou liste_de_poudlard[0]["House"] est égal à liste_maison[1][1]:
+            perso["Maison"] = liste_de_poudlard[0]["House"]
+        Sinon:
+            perso["Maison"] = liste_de_poudlard[1]["House"]
+    Sinon:
+        perso["Maison"] = liste_maison[0][0]
+
+    Retourner liste_de_poudlard, perso
+
+
+
+
+	
