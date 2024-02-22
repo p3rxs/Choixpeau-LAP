@@ -14,18 +14,9 @@ def csv_to_table(csv_file):
     '''
 
     with open(csv_file, mode='r', encoding='utf-8') as f:
-        tab = []
-        lines = f.readlines()
-        key_line = lines[0].strip()
-        keys = key_line.split(';')
-        for line in lines[1:]:
-            line = line.strip()
-            values = line.split(';')
-            dic = {}
-            for i in range(len(keys)):
-                dic[keys[i]] = values[i].strip()
-            tab.append(dic)
-    return tab
+        test_reader = csv.DictReader(f, delimiter=';')
+        table_via_csv_dictreader = [{key : value for key, value in element.items()} for element in test_reader]
+    return table_via_csv_dictreader
 
 
 def fusion_table(tabl1, tabl2):
@@ -129,9 +120,6 @@ def affichage_des_voisins(perso, liste_de_poudlard):
 
 
 
-for perso in personnages_a_tester:
-    table, perso_avec_maison = teste_perso_voisins(poudlard_characters,perso)
-    affichage_des_voisins(perso_avec_maison, table)
 
 
 
