@@ -5,6 +5,12 @@
         <link rel="stylesheet" href="style.css">
         <title> Le choipeaux gangsta </title>
         <meta charset="utf-8">
+        <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/brython@3.12.0/brython.min.js">
+        </script>
+        <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/brython@3.12.0/brython_stdlib.js">
+        </script>
     </head>
     <body>
         <h1> Salutation voyageur! Voici le choipeaux gangsta! </h1>
@@ -15,8 +21,14 @@
             <img src="image/shield_rav.gif", alt="ravenclaw" />
             <img src="image/shield_sly.gif", alt="serpentard"/>
         </aside>
-        <script src="/brython.js">
-
+        <button id="button1" value="5">click</button>
+        <script type="text/python">
+            src="code.py"   
+        
+            from browser import document, html
+            def affichage(ev):
+                print("salut")
+            document["button1"].bind("click", affichage)
         </script>
         <button id="bouton_réponse" value=5> Bouton test</button>
     </body>
