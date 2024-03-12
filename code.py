@@ -1,8 +1,10 @@
 
-from kPPV_HENNI_ROUX_MALBERT import *
+from vfinal import *
 table = csv_to_table("question_choixpo.csv")
-print(table)
-"""
-for question_reponse in table:
+
+
+for ligne in table:
     dico = {}
-"""
+    for element in ligne:
+        dico[element] = element[table]
+        print(dico)
