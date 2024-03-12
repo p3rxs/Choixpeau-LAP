@@ -12,6 +12,7 @@ Ce programme est un choipeaux magique, on lui donne des caractéristiques de pro
 plus proches voisins, il sera capable de leur assigner une maison et de donner ses 5 plus proches voisins.
 
 """
+
 personnages_a_tester = [{"Courage": 9, "Ambition": 2, "Intelligence": 8, "Good": 9}, {"Courage": 6, "Ambition": 7, "Intelligence": 9, "Good": 7}, {"Courage": 3, "Ambition": 8, "Intelligence": 6, "Good": 3}, {"Courage": 2, "Ambition": 3, "Intelligence": 7, "Good": 8}, {"Courage": 3, "Ambition": 4, "Intelligence": 8, "Good": 8}]
 k = 5
 def csv_to_table(csv_file):
@@ -132,12 +133,12 @@ def affichage_des_voisins(perso, liste_de_poudlard):
     print(f"Ce personnage a un courage de \033[92m{perso['Courage']}\033[0m, une ambition de \033[92m{perso['Ambition']}\033[0m, une intelligence de \033[92m{perso['Intelligence']}\033[0m, une tendance à la bonté de \033[92m{perso['Good']}\033[0m,\nIl irait bien chez les \033[91m{perso['Maison']}\033[0m")
     print(f'Ses 5 plus proche voisins sont: ')
     for voisin in liste_de_poudlard[:k]:
-        print(f"{voisin['Name'], voisin['House'], voisin['Distance']}")
+        print(f"\033[93m{voisin['Name']}, {voisin['House']}, {voisin['Distance']}\033[0m")
     print("\n")
 
-
 """
+
 for perso in personnages_a_tester:
     table, perso_avec_maison = teste_perso_voisins(poudlard_characters,perso)
     affichage_des_voisins(perso_avec_maison, table)
- """
+"""

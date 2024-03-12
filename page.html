@@ -6,15 +6,13 @@
         <title> Le choipeaux gangsta </title>
         <meta charset="utf-8">
         <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/brython@3.12.0/brython.min.js">
+        src="https://cdn.jsdelivr.net/npm/brython@3.11.0/brython.min.js">
         </script>
         <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/brython@3.12.0/brython_stdlib.js">
+        src="https://cdn.jsdelivr.net/npm/brython@3.11.0/brython_stdlib.js">
         </script>
         <script type="text/javascript"
         src="vfinal.py">
-        <script type="text/python"
-        src="kPPV_HENNI_ROUX_MALBERT.py">
         </script>
     </head>
     <body>
@@ -29,17 +27,16 @@
         <p>
         
         </p>
-        <button id="button1" value="5">click</button>
+        <button id="button1">click</button>
         <script type="text/python">
             src="code.py"   
             from code import *
-            from vfinal import csv_to_table
             from browser import document, html
-            table = csv_to_table("question_choixpo.csv")
             def affichage(ev):
-                print(table)
+                document["aaa"].textContent = questions
             document["button1"].bind("click", affichage)
         </script>
+        <p id="aaa">coucou</p>
     </body>
 
 </html>
