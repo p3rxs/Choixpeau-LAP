@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="style.css">
+    <title> Le choipeaux gangsta </title>
+    <meta charset="utf-8">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.11.0/brython.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/brython@3.11.0/brython_stdlib.js"></script>
+    <script type="text/javascript" src="code.js"></script>
+</head>
+<body>
+    <h1> Salutation voyageur! Voici le choipeaux gangsta! </h1>
+    <p> Et voilà le premier paragraphe ;) </p>
+    <aside>
+        <img src="image/shield_gry.gif", alt="gryffondor" />
+        <img src="image/shield_huf.gif", alt="hufllpuff"/>
+        <img src="image/shield_rav.gif", alt="ravenclaw" />
+        <img src="image/shield_sly.gif", alt="serpentard"/>
+    </aside>
+    <p>
+        <button id="button1">Créer le questionnaire</button>
+        <script>
+            function csv_to_table(csv_file) {
+    /**
+     * Rôle : extraire les données brutes d'un fichier CSV vers une structure de données de type enregistrement
+     * Entrée : chemin et nom du fichier csv à traiter
+     * Sortie : enregistrement
+     */
+
+    const fs = require('fs');
+    const lines = fs.readFileSync(csv_file, { encoding: 'utf-8' }).split('\n');
+    const tab = [];
+    const keys = lines[0].trim().split(';');
+    for (let i = 1; i < lines.length; i++) {
+        const line = lines[i].trim();
+        const values = line.split(';');
+        const dic = {};
+        for (let j = 0; j < keys.length; j++) {
+            dic[keys[j]] = values[j].trim();
+        }
+        tab.push(dic);
+    }
+    return tab;
+}
+            document.getElementById('button1').addEventListener('click', function() {
+                // Charger le fichier CSV et effectuer les calculs
+                fetch('question_choixpo.csv')
+                    .then(response => response.text())
+                    .then(data => {
+                        const poudlardCharacters = csv_to_table(data);
+                        // Assurez-vous de définir la variable poudlardCharacters avec les données appropriées
+                        const poudlard_characters = fusion_table(poudlardCharacters, csv_to_table("Characters.csv"));
+                        // Une fois les calculs terminés, affichez le résultat
+                        for (const perso of personnagesATester) {
+                            const [table, persoAvecMaison] = testePersoVoisins(poudlardCharacters, perso);
+                            affichageDesVoisins(persoAvecMaison, table);
+                        }
+                    })
+                    .catch(error => console.error('Erreur lors du chargement du fichier :', error));
+            });
+        </script>
+    </p>
+</body>
+</html>
