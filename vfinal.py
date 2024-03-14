@@ -141,4 +141,15 @@ def affichage_des_voisins(perso, liste_de_poudlard):
 for perso in personnages_a_tester:
     table, perso_avec_maison = teste_perso_voisins(poudlard_characters,perso)
     affichage_des_voisins(perso_avec_maison, table)
+
+    <button id="button1"></button>
+        <script type="text/python">  
+            from code import *
+            from browser import document, html
+            def affichage(ev):
+                document["aaa"].textContent = questions
+            document["button1"].bind("click", affichage)
+        </script>
+        <p id="aaa">coucou</p>
+        document["aaa"].textContent = questions
 """
