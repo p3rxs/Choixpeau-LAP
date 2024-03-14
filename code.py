@@ -1,5 +1,5 @@
-
 from vfinal import *
+
 table = csv_to_table("question_choixpo.csv")
 
 def liste_element_chercher(table, recherche):
@@ -27,4 +27,9 @@ intelligences3 = liste_element_chercher(table, 'intelligence3')
 goods1 = liste_element_chercher(table, 'good1')
 goods2 = liste_element_chercher(table, 'good2')
 goods3 = liste_element_chercher(table, 'good3')
-print(goods1)
+print(reponses3)
+"""
+numero_reponse = ev.target.value
+                if compteur_des_reponses > len(reponses1):
+                    document["hudoay"].style.display = "none"
+"""
