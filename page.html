@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 
+<!DOCTYPE html>
 <html>
     <head>
         <link rel="stylesheet" href="style.css">
@@ -15,19 +15,22 @@
     </head>
     <body onload="brython()">
         <h1> Salutation voyageur! Voici le choipeaux gangsta! </h1>
-        <p> Et voilà le premier paragraphe ;) </p>
         <aside>
             <img src="image/shield_gry.gif", alt="gryffondor" />
             <img src="image/shield_huf.gif", alt="hufllpuff"/>
             <img src="image/shield_rav.gif", alt="ravenclaw" />
             <img src="image/shield_sly.gif", alt="serpentard"/>
         </aside>
+        <p id="question"></p>
+        <p id="resultat"></p>
         <p>
-            <button id="rep1" value=1> je la donne aux objets trouvés </button>
-            <button id="rep2" value=2> je laisse la clef sans la toucher </button>
-            <button id="rep3" value=3> je menace le propriétaire de tout divulguer en échange d’argent </button>
+            <button id="rep1" value=1 > je la donne aux objets trouvés </button>
+            <button id="rep2" value=2 > je laisse la clef sans la toucher </button>
+            <button id="rep3" value=3 > je menace le propriétaire de tout divulguer en échange d’argent </button>
+
         </p>
-        <script type="text/python">  
+        <script type="text/python">
+            from math import sqrt  
             from browser import document, html
             def csv_to_table(csv_file):
                 with open(csv_file, mode='r', encoding='utf-8') as f:
@@ -153,15 +156,14 @@
                     return liste_de_poudlard, perso
                 
                 def affichage_des_voisins(perso, liste_de_poudlard):
-                    print(f"Ce personnage a un courage de \033[92m{perso['Courage']}\033[0m, une ambition de \033[92m{perso['Ambition']}\033[0m, une intelligence de \033[92m{perso['Intelligence']}\033[0m, une tendance à la bonté de \033[92m{perso['Good']}\033[0m,\nIl irait bien chez les \033[91m{perso['Maison']}\033[0m")
-                    print(f'Ses 5 plus proche voisins sont: ')
+                    document["resultat"].textContent = (f"Ce personnage a un courage de \033[92m{perso['Courage']}\033[0m, une ambition de \033[92m{perso['Ambition']}\033[0m, une intelligence de \033[92m{perso['Intelligence']}\033[0m, une tendance à la bonté de \033[92m{perso['Good']}\033[0m,\nIl irait bien chez les \033[91m{perso['Maison']}\033[0m")
+                    document["resultat"].textContent = (f'Ses 5 plus proche voisins sont: ')
                     for voisin in liste_de_poudlard[:k]:
-                        print(f"\033[93m{voisin['Name']}, {voisin['House']}, {voisin['Distance']}\033[0m")
-                    print("\n")
-                
+                        document["resultat"].textContent = (f"\033[93m{voisin['Name']}, {voisin['House']}, {voisin['Distance']}\033[0m")
+                    document["resultat"].textContent = ("\n")
                 
             
-            document <= html.P(questions[compteur_des_reponses])
+            document["question"].textContent = questions[compteur_des_reponses]
             def reponse1(ev):
                 global compteur_des_reponses
                 global coura
@@ -170,7 +172,7 @@
                 global good
                 global titre_maison
                 global teste_perso_voisins
-                if compteur_des_reponses == len(reponses1):
+                if compteur_des_reponses == len(reponses1) - 1:
                     utilisateur = {}
                     utilisateur["Courage"] = coura
                     utilisateur["Ambition"] = ambi
@@ -182,10 +184,10 @@
                     table, perso_avec_maison = teste_perso_voisins(poudlard_characters,utilisateur)
                     affichage_des_voisins(perso_avec_maison, table)
                 else:
-                    document <= html.P(questions[compteur_des_reponses])
-                    document["rep1"].textContent = reponses1[compteur_des_reponses]
-                    document["rep2"].textContent = reponses2[compteur_des_reponses]
-                    document["rep3"].textContent = reponses3[compteur_des_reponses]
+                    document["question"].textContent = questions[compteur_des_reponses + 1]
+                    document["rep1"].textContent = reponses1[compteur_des_reponses + 1]
+                    document["rep2"].textContent = reponses2[compteur_des_reponses + 1]
+                    document["rep3"].textContent = reponses3[compteur_des_reponses + 1]
                     coura += float(courages1[compteur_des_reponses])
                     inte += float(intelligences1[compteur_des_reponses])
                     ambi += float(ambitions1[compteur_des_reponses])
@@ -202,7 +204,7 @@
                 global good
                 global titre_maison
                 global teste_perso_voisins
-                if compteur_des_reponses == len(reponses1):
+                if compteur_des_reponses == len(reponses1) - 1:
                     utilisateur = {}
                     utilisateur["Courage"] = coura
                     utilisateur["Ambition"] = ambi
@@ -213,11 +215,11 @@
                     document["rep3"].style.display = "none"
                     table, perso_avec_maison = teste_perso_voisins(poudlard_characters,utilisateur)
                     affichage_des_voisins(perso_avec_maison, table)
-                else:
-                    document <= html.P(questions[compteur_des_reponses])
-                    document["rep1"].textContent = reponses1[compteur_des_reponses]
-                    document["rep2"].textContent = reponses2[compteur_des_reponses]
-                    document["rep3"].textContent = reponses3[compteur_des_reponses]
+                else:  
+                    document["question"].textContent = questions[compteur_des_reponses + 1]
+                    document["rep1"].textContent = reponses1[compteur_des_reponses + 1]
+                    document["rep2"].textContent = reponses2[compteur_des_reponses + 1]
+                    document["rep3"].textContent = reponses3[compteur_des_reponses + 1]
                     coura += float(courages1[compteur_des_reponses])
                     inte += float(intelligences1[compteur_des_reponses])
                     ambi += float(ambitions1[compteur_des_reponses])
@@ -233,7 +235,7 @@
                 global good
                 global titre_maison
                 global teste_perso_voisins
-                if compteur_des_reponses == len(reponses1):
+                if compteur_des_reponses == len(reponses1) - 1:
                     utilisateur = {}
                     utilisateur["Courage"] = coura
                     utilisateur["Ambition"] = ambi
@@ -245,18 +247,17 @@
                     table, perso_avec_maison = teste_perso_voisins(poudlard_characters,utilisateur)
                     affichage_des_voisins(perso_avec_maison, table)
                 else:
-                    document <= html.P(questions[compteur_des_reponses])
-                    document["rep1"].textContent = reponses1[compteur_des_reponses]
-                    document["rep2"].textContent = reponses2[compteur_des_reponses]
-                    document["rep3"].textContent = reponses3[compteur_des_reponses]
+                    document["question"].textContent = questions[compteur_des_reponses + 1]
+                    document["rep1"].textContent = reponses1[compteur_des_reponses + 1]
+                    document["rep2"].textContent = reponses2[compteur_des_reponses + 1]
+                    document["rep3"].textContent = reponses3[compteur_des_reponses + 1]
                     coura += float(courages1[compteur_des_reponses])
                     inte += float(intelligences1[compteur_des_reponses])
                     ambi += float(ambitions1[compteur_des_reponses])
                     good += float(goods1[compteur_des_reponses])
                     print(coura, inte, ambi, good)
                     compteur_des_reponses +=1
-                
-
+            
             document["rep1"].bind("click", reponse1)
             document["rep2"].bind("click", reponse2)
             document["rep3"].bind("click", reponse3)
